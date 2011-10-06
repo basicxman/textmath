@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "textmath"
+
+puts TextMath::Document.new(ARGV[0]).generate

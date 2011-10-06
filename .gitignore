@@ -1,0 +1,9 @@
+*.tmp
+*.aux
+*.dvi
+*.pdf
+*.tex
+*.input
+*.log
+Gemfile.lock
+pkg
