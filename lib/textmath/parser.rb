@@ -47,7 +47,7 @@ module TextMath
 
     def evaluate(token)
       if token.type == :exp
-        sub_group(token.value)
+        sub_group(token.value, "", "")
       else
         case token.value
         when '!=' then '\neq'
@@ -57,8 +57,10 @@ module TextMath
       end
     end
 
-    def sub_group(group_key)
-      "(" + parse_expression(@groups[group_key]).join("") + ")"
+    def sub_group(group_key, prefix = "(", suffix = ")")
+      result = parse_expression(@groups[group_key])
+      prefix, suffix = "","" if result.first[0..5] == '\dfrac'
+      prefix + result.join("") + suffix
     end
   end
 end
