@@ -1,4 +1,5 @@
 require "textmath/operations"
+require "pp"
 
 module TextMath
   class Parser
@@ -16,6 +17,7 @@ module TextMath
     end
 
     def parse_expression(tokens)
+      pp tokens if ARGV[1] == "debug"
       output = []
       skip_next = false
       tokens.each_with_index do |token, index|
@@ -50,8 +52,17 @@ module TextMath
         sub_group(token.value, "", "")
       else
         case token.value
-        when '!=' then '\neq'
-        when '\d' then '\div'
+        when '!='  then ' \neq '
+        when '\d'  then ' \div '
+        when '\s{' then '\sqrt{'
+        when '=~'  then ' \doteq '
+        when '|'   then ' \vert '
+        when '>='  then ' \geq '
+        when '<='  then ' \leq '
+        when 'in'  then ' \in '
+        when '['   then ' \lbrace '
+        when ']'   then ' \rbrace '
+        when 'R'   then ' R '
         else token.value
         end
       end
@@ -59,7 +70,7 @@ module TextMath
 
     def sub_group(group_key, prefix = "(", suffix = ")")
       result = parse_expression(@groups[group_key])
-      prefix, suffix = "","" if result.first[0..5] == '\dfrac'
+      prefix, suffix = "","" if result.first[2..7] == '\dfrac'
       prefix + result.join("") + suffix
     end
   end

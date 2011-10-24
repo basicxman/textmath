@@ -14,8 +14,13 @@ module TextMath
 
     def parse
       if @raw[0] == "="
-        @raw.slice! 0
-        @output += '=\ '
+        if @raw[1] == "~"
+          2.times { @raw.slice!(0) }
+          @output += '\doteq\ '
+        else
+          @raw.slice! 0
+          @output += '=\ '
+        end
       else
         @output += '\ \ '
       end

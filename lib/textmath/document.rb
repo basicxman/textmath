@@ -10,6 +10,11 @@ module TextMath
     def generate
       @document = ""
       @contents.each do |line|
+        if line[0, 2] == "--"
+          @text = line[2..-1]
+          @document += r(:justified).result(binding)
+          next
+        end
         line = Latex.new(line)
         @document += if line.equation?
           line.equation

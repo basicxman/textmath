@@ -25,7 +25,16 @@ module TextMath
     end
 
     def line
-      @raw + line_ending
+      temp = if marker?
+        if @raw[0] =~ /[0-9]/
+          @raw + "."
+        else
+          @raw + ")"
+        end
+      else
+        @raw
+      end
+      temp + line_ending
     end
 
     def line_ending

@@ -26,7 +26,7 @@ module TextMath
     end
 
     def parse
-      tokens = @string.scan(/[\\a-z]+|[0-9]+|[\(\)+\-^\/*\s+]{1}/).map { |c| tokenize(c) }.compact
+      tokens = @string.scan(/[|\[\]\>\<!\.\\A-Za-z=~\{\}]+|[0-9]+|[\(\)+\-^\/*\s+]{1}/).map { |c| tokenize(c) }.compact
       expressions = Expressions.new(tokens).output
     end
   end
